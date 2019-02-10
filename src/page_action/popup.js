@@ -38,6 +38,7 @@ chrome.tabs.query(
     //   .querySelector('meta[name="go-import"]')
     //   .content.split(" ")[0];
 
+    // http://infoheap.com/chrome-extension-tutorial-access-dom/
     chrome.tabs.executeScript(
       tabId,
       {
