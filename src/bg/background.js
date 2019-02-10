@@ -38,5 +38,26 @@ chrome.runtime.onInstalled.addListener(function() {
         actions: [new chrome.declarativeContent.ShowPageAction()]
       }
     ]);
+
+    // chrome.tabs.query(
+    //   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+    //   function(tabs) {
+    //     // const url = document
+    //     //   .querySelector('meta[name="go-import"]')
+    //     //   .content.split(" ")[0];
+    //     // console.log(`go-import`, url);
+    //     // // chrome.storage.sync.set({ url: tabs[0].url }, function() {});
+
+    //     chrome.tabs.executeScript(
+    //       tabs[0].id,
+    //       {
+    //         code: `document.querySelector('meta[name="go-import"]').content.split(' ')[0]`
+    //       },
+    //       function(url) {
+    //         chrome.storage.sync.set({ url }, function() {});
+    //       }
+    //     );
+    //   }
+    // );
   });
 });
