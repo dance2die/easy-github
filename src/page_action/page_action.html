@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      button {
+        height: 30px;
+        width: 30px;
+        outline: none;
+      }
+
+      pre {
+        margin: 1rem;
+        padding: 1rem 2rem 1rem 0;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <pre>
+      <code>
+        git remote add upstream <span id="url" />
+        git fetch upstream
+        git branch --set-upstream-to=upstream/master master
+      </code>
+    </pre>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

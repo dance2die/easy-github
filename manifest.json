@@ -1,0 +1,31 @@
+{
+  "name": "Easy GitHub",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Working with GitHub easy",
+  "homepage_url": "https://sungkim.co",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "page": "src/bg/background.html",
+    "persistent": false
+  },
+  "options_page": "src/options/options.html",
+  "page_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "Easy GitHub Title",
+    "default_popup": "src/page_action/page_action.html"
+  },
+  "permissions": [
+    "https://github.com/*",
+    "storage",
+    "declarativeContent",
+    "activeTab",
+    "tabs",
+    "clipboardWrite"
+  ]
+}
