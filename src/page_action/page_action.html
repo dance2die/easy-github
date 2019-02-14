@@ -2,23 +2,33 @@
 <html>
   <head>
     <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-      }
-
       pre {
         margin: 1rem;
-        padding: 1rem 2rem 1rem 0;
+        padding: 0 2em 0;
         border: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 1.15rem;
+      }
+
+      #fork_sync {
+        position: relative;
+      }
+
+      #copy {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-right: 1rem;
+        width: 100px;
       }
     </style>
   </head>
   <body>
-    <pre id="fork_sync">
-      <code id="url" />
-    </pre>
+    <div id="fork_sync">
+      <pre>
+        <button id="copy" type="button">Copy</button>
+        <code id="url"></code>
+      </pre>
+    </div>
 
     <script src="popup.js"></script>
   </body>

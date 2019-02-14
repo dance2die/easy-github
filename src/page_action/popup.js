@@ -26,6 +26,9 @@
 //   }
 // );
 
+const urlEl = document.getElementById("url");
+const forkSyncEl = document.getElementById("fork_sync");
+
 chrome.tabs.query(
   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
   function(tabs) {
@@ -63,8 +66,6 @@ chrome.tabs.query(
 
     chrome.tabs.executeScript(tabId, { code }, function(result) {
       const { forkUrl, url, href } = result[0];
-      const urlEl = document.getElementById("url");
-      const forkSyncEl = document.getElementById("fork_sync");
 
       if (forkUrl) {
         urlEl.innerText = `
@@ -77,7 +78,7 @@ chrome.tabs.query(
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
       } else {
-        forkSyncEl.innerText = `Nothing to sync here`;
+        forkSyncEl.innerHTML = `<pre>Nothing to sync here</pre>`;
         // git remote add upstream ${href}
         // git fetch upstream
         // git branch --set-upstream-to=upstream/master master`;
@@ -96,6 +97,21 @@ chrome.tabs.query(
     //   git fetch upstream
     //   git branch --set-upstream-to=upstream/master master`;
     // });
+
+    document.getElementById("copy").addEventListener("click", e => {
+      let code = urlEl.innerText
+        .split("\n")
+        // Get rid of new lines
+        .filter(_ => _.replace(/\s+/g, ""))
+        .map(c => c.trim())
+        .join("\n");
+
+      // alert(`"${code}"`);
+      navigator.clipboard
+        .writeText(code)
+        .then(() => alert("Copied to clipboard~"))
+        .catch(() => alert("Failed to copy to clipboard..."));
+    });
   }
 );
 
