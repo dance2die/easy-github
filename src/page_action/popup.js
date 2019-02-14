@@ -63,22 +63,26 @@ chrome.tabs.query(
 
     chrome.tabs.executeScript(tabId, { code }, function(result) {
       const { forkUrl, url, href } = result[0];
+      const urlEl = document.getElementById("url");
+      const forkSyncEl = document.getElementById("fork_sync");
 
       if (forkUrl) {
-        document.getElementById("url").innerText = `
+        urlEl.innerText = `
           git remote add upstream https://github.com/${forkUrl}
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
       } else if (url) {
-        document.getElementById("url").innerText = `
+        urlEl.innerText = `
           git remote add upstream https://${url}
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
       } else {
-        document.getElementById("url").innerText = `
-          git remote add upstream ${href}
-          git fetch upstream
-          git branch --set-upstream-to=upstream/master master`;
+        forkSyncEl.innerText = `Nothing to sync here`;
+        // git remote add upstream ${href}
+        // git fetch upstream
+        // git branch --set-upstream-to=upstream/master master`;
+
+        // forkSyncEl.style.display = "none";
       }
 
       // document.getElementById("url").innerText = `result=${JSON.stringify(
