@@ -26,21 +26,16 @@
 //   }
 // );
 
-const urlEl = document.getElementById("url");
 const forkSyncEl = document.getElementById("fork_sync");
+const forkSyncURLEl = document.getElementById("url_fork_sync");
+
+const localPREl = document.getElementById("local_pr");
+const localPRURLEl = document.getElementById("url_local_pr");
 
 chrome.tabs.query(
   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
   function(tabs) {
     const { id: tabId } = tabs[0].url;
-
-    // chrome.storage.sync.set({ url }, function() {});
-    // document.getElementById("url").innerText = url;
-
-    // document.getElementById("url").innerText = document
-    //   .querySelector('meta[name="go-import"]')
-    //   .content.split(" ")[0];
-
     // http://infoheap.com/chrome-extension-tutorial-access-dom/
 
     // const forkUrlCode = `document.querySelector('meta[name="octolytics-dimension-repository_parent_nwo"]')`;
@@ -49,7 +44,6 @@ chrome.tabs.query(
     // Try to get
     // 1. fork parent URL
     // 2. URL from metadata
-    // 3. last resort - current URL
     const code = `(function getUrls(){
       const forkUrl = document.querySelector('meta[name="octolytics-dimension-repository_parent_nwo"]') 
         ? document.querySelector('meta[name="octolytics-dimension-repository_parent_nwo"]').content
@@ -59,63 +53,65 @@ chrome.tabs.query(
         ? document.querySelector('meta[name="go-import"]').content.split(' ')[0]
         : undefined;
 
-      const href = window.location.href;
-
-      return { forkUrl, url, href };
+      return { forkUrl, url };
     })()`;
 
     chrome.tabs.executeScript(tabId, { code }, function(result) {
-      const { forkUrl, url, href } = result[0];
+      const { forkUrl, url } = result[0];
 
       if (forkUrl) {
-        urlEl.innerText = `
+        forkSyncURLEl.innerText = `
           git remote add upstream https://github.com/${forkUrl}
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
       } else if (url) {
-        urlEl.innerText = `
+        forkSyncURLEl.innerText = `
           git remote add upstream https://${url}
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
       } else {
         forkSyncEl.innerHTML = `<pre>Nothing to sync here</pre>`;
-        // git remote add upstream ${href}
-        // git fetch upstream
-        // git branch --set-upstream-to=upstream/master master`;
-
-        // forkSyncEl.style.display = "none";
       }
 
-      // document.getElementById("url").innerText = `result=${JSON.stringify(
+      // document.getElementById("url_fork_sync").innerText = `result=${JSON.stringify(
       //   result
       // )}`;
     });
 
-    // chrome.storage.sync.get("url", function(url) {
-    //   document.getElementById("url").innerText = `
+    // chrome.storage.sync.get("url_fork_sync", function(url) {
+    //   document.getElementById("url_fork_sync").innerText = `
     //   git remote add upstream ${url}
     //   git fetch upstream
     //   git branch --set-upstream-to=upstream/master master`;
     // });
 
-    document.getElementById("copy").addEventListener("click", e => {
-      let code = urlEl.innerText
+    const extractCopyText = text =>
+      text
         .split("\n")
         // Get rid of new lines
         .filter(_ => _.replace(/\s+/g, ""))
         .map(c => c.trim())
         .join("\n");
 
-      // alert(`"${code}"`);
+    const copyToClipboard = code =>
       navigator.clipboard
         .writeText(code)
         .then(() => alert("Copied to clipboard~"))
         .catch(() => alert("Failed to copy to clipboard..."));
+
+    document.getElementById("copy_fork_sync").addEventListener("click", e => {
+      const code = extractCopyText(forkSyncURLEl.innerText);
+      copyToClipboard(code);
+    });
+
+    document.getElementById("copy_local_pr").addEventListener("click", e => {
+      const code = extractCopyText(localPRURLEl.innerText);
+      copyToClipboard(code);
     });
   }
 );
 
-// chrome.storage.sync.get("url", function(url) {
+// chrome.storage.sync.get("url_fork_sync", function(url) {
 //   console.log(`url`, url);
-//   document.getElementById("url").innerText = url;
+//   document.getElementById("url_fork_sync").innerText = url;
 // });
