@@ -4,9 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "prettier",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-prettier": "^4.0.0",
+    "prettier": "^1.16.4"
+  }
 }
