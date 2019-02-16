@@ -38,6 +38,8 @@
 //   document.getElementById("url_fork_sync").innerText = url;
 // });
 
+// import { isPR } from "../lib/page-detects";
+
 const forkSyncEl = document.getElementById("fork_sync");
 const forkSyncURLEl = document.getElementById("url_fork_sync");
 
@@ -72,11 +74,43 @@ chrome.tabs.query(
   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
   function(tabs) {
     const { id: tabId } = tabs[0].url;
+
     setupForkSync(tabId);
+    setupLocalPR(tabId);
   }
 );
 
+function setupLocalPR(tabId) {
+  // localPREl.innerText = `<pre>Local PR</pre>`;
+  // if (!isPR()) return;
+
+  // <meta property="og:url" content="https://github.com/dance2die/calendar-dates/pull/62">
+  const code = `(function getPRId() {
+    const url = document.querySelector('meta[property="og:url"]')
+      ? document.querySelector('meta[property="og:url"]').content
+      : undefined;
+    const tokens = url.split("/");
+    const prId = tokens[tokens.length - 1];
+
+    return url ? prId : undefined;
+  })()`;
+
+  chrome.tabs.executeScript(tabId, { code }, function(result) {
+    const prId = result[0];
+
+    if (prId) {
+      localPREl.innerText = `git fetch origin pull/${prId}/head:BRANCHNAME`;
+    } else {
+      localPREl.innerText = `<pre>Local PR</pre>`;
+    }
+
+    // localPREl.innerText = JSON.stringify(result);
+    // localPREl.innerText = prId;
+  });
+}
+
 function setupForkSync(tabId) {
+  // @TODO: use "octolytics-dimension-repository_is_fork" to check if repo is a fork later
   const code = `(function getUrls(){
       const forkUrl = document.querySelector('meta[name="octolytics-dimension-repository_parent_nwo"]') 
         ? document.querySelector('meta[name="octolytics-dimension-repository_parent_nwo"]').content
