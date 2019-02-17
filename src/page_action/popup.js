@@ -10,10 +10,10 @@
 //   document.getElementById("forSyncCode").innerText = url;
 // });
 
-const forkSyncContainer = document.getElementById("forkSync");
-const forkSync = document.getElementById("forSyncCode");
+// const forkSyncContainer = document.getElementById("forkSync");
+// const localPRContainer = document.getElementById("localPR");
 
-const localPRContainer = document.getElementById("localPR");
+const forkSync = document.getElementById("forSyncCode");
 const localPR = document.getElementById("localPRCode");
 
 const extractCopyText = text =>
@@ -79,7 +79,7 @@ function setupForkSync(tabId) {
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
     } else {
-      forkSync.innerText = `<pre>Nothing to do here - Not a Forked Repo</pre>`;
+      forkSync.innerText = `Nothing to do here - Not a Forked Repo`;
       copyForkSyncButton.style.visibility = "hidden";
     }
   });
@@ -105,7 +105,7 @@ function setupLocalPR(tabId) {
     if (isPR) {
       localPR.innerText = `git fetch origin pull/${prId}/head:BRANCHNAME`;
     } else {
-      localPR.innerText = `<pre>Nothing to do here - Not a Pull Request page</pre>`;
+      localPR.innerText = `Nothing to do here - Not a Pull Request page`;
       copyLocalPRButton.style.visibility = "hidden";
     }
   });

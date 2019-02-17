@@ -9,16 +9,44 @@
     />
 
     <style>
+      body {
+        display: grid;
+        /* prettier-ignore */
+        grid: "header" 0.7fr
+              "fork  " 1fr
+              "PR    " 1fr
+              / 1fr;
+      }
+
+      header {
+        grid-area: header;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #forkSync,
+      #localPR {
+        position: relative;
+      }
+
+      #forkSync {
+        grid-area: "fork";
+      }
+
+      #localPR {
+        grid-area: "PR";
+      }
+
       pre {
         margin: 1rem;
-        padding: 0 2em 0;
+        padding: 0 5rem 1rem 0;
         border: 1px solid rgba(0, 0, 0, 0.1);
         font-size: 1.15rem;
       }
 
-      #forkSync,
-      #localPR {
-        position: relative;
+      code {
+        margin-right: 2rem;
       }
 
       button {
@@ -27,12 +55,6 @@
         top: 0;
         margin-right: 1rem;
         width: 100px;
-      }
-
-      header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
 
       h1 {
