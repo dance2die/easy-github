@@ -26,25 +26,25 @@
 //   }
 // );
 
-// chrome.storage.sync.get("url_fork_sync", function(url) {
-//   document.getElementById("url_fork_sync").innerText = `
+// chrome.storage.sync.get("forSyncCode", function(url) {
+//   document.getElementById("forSyncCode").innerText = `
 //   git remote add upstream ${url}
 //   git fetch upstream
 //   git branch --set-upstream-to=upstream/master master`;
 // });
 
-// chrome.storage.sync.get("url_fork_sync", function(url) {
+// chrome.storage.sync.get("forSyncCode", function(url) {
 //   console.log(`url`, url);
-//   document.getElementById("url_fork_sync").innerText = url;
+//   document.getElementById("forSyncCode").innerText = url;
 // });
 
 // import { isPR } from "../lib/page-detects";
 
-const forkSyncEl = document.getElementById("fork_sync");
-const forkSyncURLEl = document.getElementById("url_fork_sync");
+const forkSyncContainer = document.getElementById("forkSync");
+const forkSync = document.getElementById("forSyncCode");
 
-const localPREl = document.getElementById("local_pr");
-const localPRURLEl = document.getElementById("url_local_pr");
+const localPRContainer = document.getElementById("localPR");
+const localPR = document.getElementById("localPRCode");
 
 const extractCopyText = text =>
   text
@@ -60,13 +60,13 @@ const copyToClipboard = code =>
     .then(() => alert("Copied to clipboard~"))
     .catch(() => alert("Failed to copy to clipboard..."));
 
-document.getElementById("copy_fork_sync").addEventListener("click", e => {
-  const code = extractCopyText(forkSyncURLEl.innerText);
+document.getElementById("copyForkSyncButton").addEventListener("click", _ => {
+  const code = extractCopyText(forkSync.innerText);
   copyToClipboard(code);
 });
 
-document.getElementById("copy_local_pr").addEventListener("click", e => {
-  const code = extractCopyText(localPRURLEl.innerText);
+document.getElementById("copyLocalPRButton").addEventListener("click", _ => {
+  const code = extractCopyText(localPR.innerText);
   copyToClipboard(code);
 });
 
@@ -79,35 +79,6 @@ chrome.tabs.query(
     setupLocalPR(tabId);
   }
 );
-
-function setupLocalPR(tabId) {
-  // localPREl.innerText = `<pre>Local PR</pre>`;
-  // if (!isPR()) return;
-
-  // <meta property="og:url" content="https://github.com/dance2die/calendar-dates/pull/62">
-  const code = `(function getPRId() {
-    const url = document.querySelector('meta[property="og:url"]')
-      ? document.querySelector('meta[property="og:url"]').content
-      : undefined;
-    const tokens = url.split("/");
-    const prId = tokens[tokens.length - 1];
-
-    return url ? prId : undefined;
-  })()`;
-
-  chrome.tabs.executeScript(tabId, { code }, function(result) {
-    const prId = result[0];
-
-    if (prId) {
-      localPREl.innerText = `git fetch origin pull/${prId}/head:BRANCHNAME`;
-    } else {
-      localPREl.innerText = `<pre>Local PR</pre>`;
-    }
-
-    // localPREl.innerText = JSON.stringify(result);
-    // localPREl.innerText = prId;
-  });
-}
 
 function setupForkSync(tabId) {
   // @TODO: use "octolytics-dimension-repository_is_fork" to check if repo is a fork later
@@ -128,19 +99,50 @@ function setupForkSync(tabId) {
     const { forkUrl, url } = result[0];
 
     if (forkUrl) {
-      forkSyncURLEl.innerText = `
+      forkSync.innerText = `
           git remote add upstream https://github.com/${forkUrl}
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
     } else if (url) {
-      forkSyncURLEl.innerText = `
+      forkSync.innerText = `
           git remote add upstream https://${url}
           git fetch upstream
           git branch --set-upstream-to=upstream/master master`;
     } else {
-      forkSyncEl.innerHTML = `<pre>Nothing to sync here</pre>`;
+      forkSync.innerText = `<pre>Nothing to do here - Not a Forked Repo</pre>`;
+      copyForkSyncButton.style.visibility = "hidden";
+    }
+  });
+}
+
+function setupLocalPR(tabId) {
+  // localPR.innerText = `<pre>Local PR</pre>`;
+  // if (!isPR()) return;
+
+  // <meta property="og:url" content="https://github.com/dance2die/calendar-dates/pull/62">
+  const code = `(function getPRId() {
+    const url = document.querySelector('meta[property="og:url"]')
+      ? document.querySelector('meta[property="og:url"]').content
+      : undefined;
+    const tokens = url.split("/");
+    const prId = tokens[tokens.length - 1];
+
+    return url ? prId : undefined;
+  })()`;
+
+  chrome.tabs.executeScript(tabId, { code }, function(result) {
+    const prId = result[0];
+
+    const isPR = !isNaN(parseInt(prId));
+
+    if (isPR) {
+      localPR.innerText = `git fetch origin pull/${prId}/head:BRANCHNAME`;
+    } else {
+      localPR.innerText = `<pre>Nothing to do here - Not a Pull Request page</pre>`;
+      copyLocalPRButton.style.visibility = "hidden";
     }
 
-    // forkSyncURLEl.innerText = `result=${JSON.stringify(result)}`;
+    // localPRContainer.innerText = JSON.stringify(result);
+    // localPR.innerText = prId;
   });
 }
