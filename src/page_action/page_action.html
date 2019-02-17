@@ -21,22 +21,32 @@
         margin-right: 1rem;
         width: 100px;
       }
+
+      header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
-    <div id="forkSync">
+    <header>
+      <h1>Easy GitHub</h1>
+    </header>
+
+    <section id="forkSync">
       <pre>
         <button id="copyForkSyncButton" type="button">Copy</button>
         <code id="forSyncCode"></code>
       </pre>
-    </div>
+    </section>
 
-    <div id="localPR">
+    <section id="localPR">
       <pre>
           <button id="copyLocalPRButton" type="button">Copy</button>
           <code id="localPRCode"></code>
       </pre>
-    </div>
+    </section>
 
     <script src="popup.js"></script>
   </body>
