@@ -102,8 +102,12 @@ function setupLocalPR(tabId) {
 
     const isPR = !isNaN(parseInt(prId));
 
+    // @ToDo: Get this from user's preference
+    const branchName = "BRANCHNAME";
+
     if (isPR) {
-      localPR.innerText = `git fetch origin pull/${prId}/head:BRANCHNAME`;
+      localPR.innerText = `git fetch origin pull/${prId}/head:${branchName}
+git checkout ${branchName}`;
     } else {
       localPR.innerText = `Nothing to do here - Not a Pull Request page`;
       copyLocalPRButton.style.visibility = "hidden";

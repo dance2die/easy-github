@@ -22,16 +22,24 @@
 
       header {
         grid-area: header;
+        font-size: 1.2rem;
 
         display: flex;
         justify-content: center;
         align-items: center;
       }
 
-      section {
+      fieldset {
         position: relative;
-        border: 1px solid rgba(0, 0, 0, 0.1);
+        /* border: 1px solid rgba(0, 0, 0, 0.1); */
         margin-bottom: 1.2em;
+      }
+
+      legend {
+        font-size: 1.3rem;
+        background-color: #000;
+        color: #fff;
+        padding: 3px 6px;
       }
 
       #forkSync {
@@ -50,8 +58,8 @@
 
       button {
         position: absolute;
-        right: 0;
-        top: 0;
+        right: -2px;
+        top: 3px;
         width: 100px;
       }
 
@@ -65,15 +73,19 @@
       <h1>Easy GitHub</h1>
     </header>
 
-    <section id="forkSync">
+    <fieldset>
+      <legend>Sync Fork to Master Branch</legend>
+
       <button id="copyForkSyncButton" type="button">Copy</button>
       <pre id="forSyncCode"></pre>
-    </section>
+    </fieldset>
 
-    <section id="localPR">
+    <fieldset>
+      <legend>Check out PR to Local</legend>
+
       <button id="copyLocalPRButton" type="button">Copy</button>
       <pre id="localPRCode"></pre>
-    </section>
+    </fieldset>
 
     <script src="popup.js"></script>
   </body>
