@@ -1,31 +1,3 @@
-// let changeColor = document.getElementById("changeColor");
-
-// chrome.storage.sync.get("color", function(data) {
-//   changeColor.style.backgroundColor = data.color;
-//   changeColor.setAttribute("value", data.color);
-// });
-
-// changeColor.onclick = function(element) {
-//   let color = element.target.value;
-//   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-//     chrome.tabs.executeScript(tabs[0].id, {
-//       code: `document.body.style.backgroundColor = "${color}";`
-//     });
-//   });
-// };
-
-// chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
-//   var url = tabs[0].url;
-//   console.log(`url`, url);
-// });
-
-// chrome.tabs.query(
-//   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
-//   function(tabs) {
-//     console.log(`tabs`, tabs);
-//   }
-// );
-
 // chrome.storage.sync.get("forSyncCode", function(url) {
 //   document.getElementById("forSyncCode").innerText = `
 //   git remote add upstream ${url}
@@ -37,8 +9,6 @@
 //   console.log(`url`, url);
 //   document.getElementById("forSyncCode").innerText = url;
 // });
-
-// import { isPR } from "../lib/page-detects";
 
 const forkSyncContainer = document.getElementById("forkSync");
 const forkSync = document.getElementById("forSyncCode");
@@ -116,9 +86,6 @@ function setupForkSync(tabId) {
 }
 
 function setupLocalPR(tabId) {
-  // localPR.innerText = `<pre>Local PR</pre>`;
-  // if (!isPR()) return;
-
   // <meta property="og:url" content="https://github.com/dance2die/calendar-dates/pull/62">
   const code = `(function getPRId() {
     const url = document.querySelector('meta[property="og:url"]')
@@ -141,8 +108,5 @@ function setupLocalPR(tabId) {
       localPR.innerText = `<pre>Nothing to do here - Not a Pull Request page</pre>`;
       copyLocalPRButton.style.visibility = "hidden";
     }
-
-    // localPRContainer.innerText = JSON.stringify(result);
-    // localPR.innerText = prId;
   });
 }
