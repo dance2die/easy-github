@@ -12,10 +12,12 @@
       body {
         display: grid;
         /* prettier-ignore */
-        grid: "header" 0.7fr
-              "fork  " 1fr
-              "PR    " 1fr
-              / 1fr;
+        grid-template-rows: 0.7fr minmax(min-content, max-content) minmax(min-content, max-content);
+        grid-template-columns: minmax(min-content, max-content);
+        grid-template-areas:
+          "header"
+          "fork"
+          "PR";
       }
 
       header {
@@ -25,9 +27,10 @@
         justify-content: center;
         align-items: center;
       }
-      #forkSync,
-      #localPR {
+
+      section {
         position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.1);
       }
 
       #forkSync {
@@ -40,20 +43,14 @@
 
       pre {
         margin: 1rem;
-        padding: 0 5rem 1rem 0;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        font-size: 1.15rem;
-      }
-
-      code {
-        margin-right: 2rem;
+        padding: 1rem;
+        font-size: 1.1rem;
       }
 
       button {
         position: absolute;
         right: 0;
         top: 0;
-        margin-right: 1rem;
         width: 100px;
       }
 
@@ -68,17 +65,13 @@
     </header>
 
     <section id="forkSync">
-      <pre>
-        <button id="copyForkSyncButton" type="button">Copy</button>
-        <code id="forSyncCode"></code>
-      </pre>
+      <button id="copyForkSyncButton" type="button">Copy</button>
+      <pre id="forSyncCode"></pre>
     </section>
 
     <section id="localPR">
-      <pre>
-          <button id="copyLocalPRButton" type="button">Copy</button>
-          <code id="localPRCode"></code>
-      </pre>
+      <button id="copyLocalPRButton" type="button">Copy</button>
+      <pre id="localPRCode"></pre>
     </section>
 
     <script src="popup.js"></script>

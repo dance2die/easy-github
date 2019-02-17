@@ -69,19 +69,19 @@ function setupForkSync(tabId) {
     const { forkUrl, url } = result[0];
 
     if (forkUrl) {
-      forkSync.innerText = `
-          git remote add upstream https://github.com/${forkUrl}
-          git fetch upstream
-          git branch --set-upstream-to=upstream/master master`;
+      forkSync.innerText = `git remote add upstream https://github.com/${forkUrl}
+git fetch upstream
+git branch --set-upstream-to=upstream/master master`;
     } else if (url) {
-      forkSync.innerText = `
-          git remote add upstream https://${url}
-          git fetch upstream
-          git branch --set-upstream-to=upstream/master master`;
+      forkSync.innerText = `git remote add upstream https://${url}
+git fetch upstream
+git branch --set-upstream-to=upstream/master master`;
     } else {
       forkSync.innerText = `Nothing to do here - Not a Forked Repo`;
       copyForkSyncButton.style.visibility = "hidden";
     }
+
+    // forkSync.innerText = JSON.stringify(result);
   });
 }
 
