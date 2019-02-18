@@ -2,9 +2,15 @@
 
 Make GitHub interaction easier with `easy-github` chrome extension~~
 
-# Demo
+# Demos
 
-![demo](./img/demo.png)
+## Code Snippet for synchronizing a forked repository
+
+![sync fork demo](./img/demo_syncfork.png)
+
+## Code Snippet for downloading a Pull Request code to local
+
+![demo](./img/demo_localpr.png)
 
 # Planned
 
