@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link
+      href="https://unpkg.com/nes.css@2.0.0/css/nes.min.css"
+      rel="stylesheet"
+    />
+
     <style>
-      /* button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-        margin: 10px;
-      } */
+      section {
+        margin: 0 auto 0;
+        width: 50vw;
+      }
+
+      @media (max-width: 700px) {
+        section {
+          margin: 0 auto 0;
+          width: 80vw;
+        }
+      }
     </style>
   </head>
   <body>
-    <div id="buttonDiv"></div>
-    <div>
-      <h1>Enter a branch name</h1>
-      <input id="branchName" type="text" />
-      <button id="saveButton" type="submit">Save</button>
-    </div>
+    <section class="form nes-container with-title">
+      <h1 class="nes-balloon from-left">Enter a default branch name</h1>
+      <input id="branchName" class="nes-input" type="text" />
+      <button id="saveButton" class="nes-btn is-primary" type="submit">
+        Save
+      </button>
+    </section>
   </body>
   <script src="options.js"></script>
 </html>
