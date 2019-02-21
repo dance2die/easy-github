@@ -39,6 +39,18 @@ chrome.runtime.onInstalled.addListener(function() {
       }
     ]);
 
+    // Set the Branch name to use
+    const defaultBranchName = "DEFAULT_BRANCHNAME";
+    const isEmptyObject = target =>
+      Object.keys(target).length === 0 && target.constructor === Object;
+    chrome.storage.sync.get("branchName", function(branchName) {
+      if (!isEmptyObject(branchName)) return;
+
+      chrome.storage.sync.set({ branchName: defaultBranchName }, function() {
+        console.log(`set the branch name to ${branchName}`);
+      });
+    });
+
     // chrome.tabs.query(
     //   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
     //   function(tabs) {
