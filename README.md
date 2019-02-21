@@ -2,6 +2,8 @@
 
 Make GitHub interaction easier with `easy-github` chrome extension~~
 
+Available on [Chrome Web Store](https://chrome.google.com/webstore/detail/easy-github/gjeknhliambaadchnegjbpfpehhajdfg).
+
 # Demos
 
 ## Code Snippet for synchronizing a forked repository
@@ -12,7 +14,6 @@ Make GitHub interaction easier with `easy-github` chrome extension~~
 
 ![demo](./img/demo_localpr.png)
 
-# Planned
+## Global screenshot
 
-1. Add a code snippet to set upstream to the master
-1. Add a code snippet to download PR to local
+![global screenshot](./img/global_screenshot.png)
